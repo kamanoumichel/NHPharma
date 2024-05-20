@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+<div class="bg-light py-3">
+        <h1 class="h3 mb-5 text-black text-center">Les Résultats de votre recherche sont les suivants</h1>
+</div>
+
+{#{ form_start(form)}}
+<div class="flex justify-center">
+    <div class="mb-3 xl:w-96">
+        <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+            {{form_widget(form.q)}}
+        <button class="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-light uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0" type="submit">
+
+        </button>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }#}
+<div class="container-fluid mt-5">
+    <div class="container">
+    <div class="card-deck">
+    {% for el in search.product %}
+    <div class="col-md-4 mt-5 mb-2">
+        <div class="card h-100">
+            <img src="/uploads/attachments/{{el.getAttachment}}" class="card-img-top mkgm-img" alt="..." height="150">
+            <div class="card-body">
+                <h5 class="card-title">{{el.getNompro}}</h5>
+                {% if el.stock != 0 %}
+                    <p class="text-success text-right">En stock</p>
+                {% else %}
+                    <p class="text-danger text-right">Stock épuisé</p>
+                {% endif %}
+                <p class="text-dark">{{el.getPrix}} XAF</p>
+           
+            </div>
+            <div class="card-footer">
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <button class="btn btn-primary btn-lg btn-block" ><a href="{{path('app_pharmacie_detailproduit',{slug: el.getSlug})}}" class="text-dark">Voir les details</a></button> 
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <button class="btn btn-success btn-lg btn-block" ><a href="{{path('cart_add',{id: el.getId})}}" class="text-white">Ajouter au panier</a></button>
+                  </div>
+                </div>              
+            </div>
+        </div>    
+    </div>
+        
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+

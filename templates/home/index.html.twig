@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+{{ parent() }}
+  <div class="bg-light">
+    <div class="container-fluid">
+      <div class="row header_mkgm">
+          <video loop muted autoplay class="video">
+            <source src="{{ asset('assets/video/fond.mp4')}}" type="video/mp4">
+          </video>
+           <div id="header-content">
+            <h2>Bienvenue sur NHPharma</h2>
+            <p>Votre Santé à proximité</p>
+            <a href="{{ path('app_pharmacie_index')}}" class="btn btn-outline-primary text-white">Acheter maintenant</a>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="title-section text-center col-12">
+          <h2 class="text-uppercase">Catégories</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container mt-5">
+    <ul class="nav nav-pills mb-3 custom-pill" id="pills-tab" role="tablist">
+      {% for item in categories %}
+        {% if item.parent == null %}
+        <li class="nav-item mt-2">
+          <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-{{item.categoryorders}}" role="tab" aria-controls="pills-profile" aria-selected="true">
+          {{ item.nomCat}}</a>
+        </li> 
+        {% endif %}    
+      {% endfor %}  
+    </ul>
+    <div class="tab-content" id="pills-tabContent">   
+      {% for item in categories %} 
+        {% if item.parent == null %} 
+        <div class="tab-pane fade" id="pills-{{item.categoryorders}}" role="tabpanel" aria-labelledby="pills-profile-tab">    
+          <table class="table custom-table">  
+            <tbody>
+              {% for z in categories %}
+                {% if z.parent == item.nomCat %}
+                 <tr>
+                  
+                    <td> <a href="{{ path('categories_list',{ slug: z.slug}) }}" class="text-decoration:none;">{{ z.nomCat}}</a></td>
+                  
+                </tr>
+                {% endif %}
+              {% endfor %}
+             
+               
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+    
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="title-section text-center col-12">
+          <h2 class="text-uppercase">Nouveaux Produits </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container mt-5">
+    <div class="card-deck">
+      {% for j in produits|slice(0,3) %}
+      <div class="col-md-4 mt-5">
+        <div class="card h-100">
+          <img src="/uploads/attachments/{{j.attachment}}" class="card-img-top mkgm-img" alt="..." height="150">
+            <div class="card-body">
+              <h5 class="card-title">{{j.nompro}}</h5>
+                {% if j.stock != 0 %}
+                  <p class="text-success text-right">En stock</p>
+                {% else %}
+                  <p class="text-danger text-right">Stock épuissé</p>
+                {% endif %}
+              <p class="text-dark">{{j.prix}} XAF</p>              
+            </div>
+            <div class="card-footer">
+              <div class="form-group row">
+                <div class="col-lg-12">
+                  <button class="btn btn-primary btn-lg btn-block" ><a href="{{path('app_pharmacie_detailproduit',{slug: j.slug})}}" class="text-dark">Voir les details</a></button>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-lg-12">
+                  <button class="btn btn-success btn-lg btn-block" ><a href="{{path('cart_add',{id: j.id})}}" class="text-white">Ajouter au panier</a></button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <div class="text-center mt-5 p-t-45 align-items-center mb-2">
+				<a href="{{ path('app_pharmacie_index')}}" class="btn btn-outline-success rounded">
+					Voir plus
+				</a>
+			</div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="title-section text-center col-12">
+          <h2 class="text-uppercase">Conseils et Astuces du Jour</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="card-deck">
+        
+      {% for i in article|slice(0,3) %}
+        <div class="col-md-4 mb-3 rounded mkgm_trans" data-aos="fade-up" data-aos-delay="">
+          <div class="card h-100">
+            <img src="/uploads/articles/{{i.image}}" class="card-img-top" alt="..." height="150">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.titre|upper }}</h5>
+              <p class="card-text text-dark">{{i.detail|slice(0,15)}} ...</p>
+              <p><a href="{{path('article_detail',{slug: i.slug})}}"><button class="btn btn-success text-white">Voir plus</button></a></p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"><span class="icon-user-circle"></span>Auteur: {{i.auteurReference}}</small>
+              <p><small> <span class="icon-date_range"></span>Créer le: {{ i.createdat|date("d/m/Y h:m:s")}}</small></p>
+            </div>
+          </div>
+        </div>  
+      {% endfor %}
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-12">
+          <button class="btn btn-success btn-lg btn-block" ><a href="{{ path('article_index') }}" class="text-white">Plus D'astuces</a></button>
+        </div>
+      </div>
+
+  </div>
+
+
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="title-section text-center col-12">
+          <h2 class="text-uppercase">Quelques Temoignages</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12 block-3 products-wrap">
+      <div class="nonloop-block-3 no-direction owl-carousel">
+        <div class="testimony">
+          <blockquote>
+            <img src="{{ asset('assets/images/avatar_femme.jpg') }}" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+              <p>&ldquo; Hey! NHPharma. suis une de vos clientes fidèles car j'ai plusieurs fois effectuée des achats sur votre site.
+              J'aimerais vous exprimer ma gratitude car hier une fois de plus, vous m'avez prouvé qu'on peut encore faire confiance aux acahats
+              en ligne, votre livreur a été ponctuel, poli et ma commande était bien emballé. J'ai recommandé votre site à une soeur qui est 
+              souvent beaucoup occupé par le travail, elle vous contactera très bientôt. Merci de nous satisfaire&rdquo;</p>
+          </blockquote>
+          <p>&mdash; Kelly Holmes</p>
+        </div>
+        <div class="testimony">
+          <blockquote>
+            <img src="{{ asset('assets/images/avatar_homme.png') }}" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+            <p>&ldquo; Bonjour je suis Monsieur Nathan. J'ai effectué des achats sur votre site la semaine dernière, je vous reviens pour
+            exprimer mon mécontentement. En effet, j'ai passé la commande de 3 parfums homme et d'un anti grippal. Votre livreur m'a contacté et m'a dit
+            qu'il fera la livraison après 30min et est bien et belle arrivé aprés 30min. J'apprécie votre professionnalisme.&rdquo;
+            </p>
+          </blockquote>
+          <p>&mdash; Nathan Morando</p>
+        </div>
+        <div class="testimony">
+          <blockquote>
+            <img src="{{ asset('assets/images/avatar_femme.jpg') }}" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+            <p>&ldquo; Bonsoir NHPharma je suis une cliente qui a fais  des achats ce matin sur votre site. J'ai été satisfait par les différentes rubriques de
+            produits que vous offrez, j'ai aussi été ébloui par la beauté et l'organisation de vos différentes pages car je suis une designeuse.&rdquo;
+            </p>
+          </blockquote>
+          <p>&mdash; Audrey Gallone</p>
+        </div>
+        <div class="testimony">
+          <blockquote>
+            <img src="{{ asset('assets/images/avatar_homme.png') }}" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+            <p>&ldquo; Bonsoir je suis Monsieur Harry j'ai récemment fait un achat sur votre site de pharmacie en ligne et j'ai récemment fait un achat sur
+            votre site de pharmacie en ligne et j'ai été extrêmement satisfait de mon expérience car c'était la première fois. Le processus de commande
+            était simpleet rapide, et j'ai reçu ma commande dans les délais annoncés. De plus, le service client était exceptionnel. J'ai contacté l'équipe pour
+            poser une question et j'ai reçu une réponse rapide et courtoise. Merci d'exiter &rdquo;
+            </p>
+          </blockquote>
+          <p>&mdash; Harry Kameni</p>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+      
+
+
+
+</div>
+{% endblock %}
+
+
+{% block footer %}
+{{ parent() }}
+
+{% endblock %}

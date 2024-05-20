@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="bg-light py-3">
+        <h1 class="h3 mb-5 text-black text-center">Formulaire de Contact</h1>
+    </div>
+    <div class="container-fuild" style="background-image: url('assets/images//contact-us.jpg');background-repeat: no-repeat;background-attachment: fixed;background-size:cover;">
+      <div class="row" style="background-color: rgba(0, 0, 0,.4)">
+        <div class="container mt-3" >
+          <div class="col-md-12">
+          <form action="" method="post">
+          {{ form_start(contact)}}
+              <div class="p-3 p-lg-5 border mb-4">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    {{ form_row(contact.nom)}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    {{ form_row(contact.email)}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    {{ form_row(contact.message)}}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-12">
+                    <input type="submit" class="btn btn-success btn-lg btn-block" value="Envoyer le Message">
+                  </div>
+                </div>
+              </div>
+          {{form_end(contact)}}
+          </form>
+          </div>
+        </div>
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success container rounded text-center alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">
+              <span>&times;</span>
+            </button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 bt-3">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3980.7559536396357!2d11.49742097508084!3d3.8624611483536397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcfa23aace247%3A0xe07671abb10169f9!2s%C3%89cole%20Nationale%20Sup%C3%A9rieure%20Polytechnique%20de%20Yaound%C3%A9!5e0!3m2!1sfr!2scm!4v1698003498860!5m2!1sfr!2scm" width="100%" height="700px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      
+    </div>
+      
+{% endblock %}
+
+{% block footer %}
+{{ parent() }}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><h1>Astuces du Jour et Blog</h1></div>
+        </div>
+    </div>
+</div>
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 mr-auto">
+                <div class="border text-center">
+                    <img src="/uploads/articles/{{arts.image}}" alt="Image" class="img-fluid p-5">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-black">{{arts.titre}}</h2>
+                <p class="text-justify">{{arts.detail}}</p>
+                <div class="mt-5">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <table class="table custom-table">
+                                <thead>
+                                    <th>Auteur et reférence</th>
+                                    <th>Date de Création</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><span class="icon-user-circle">: {{arts.auteurReference}}</th>
+                                        <td><span class="icon-date_range"></span>: {{arts.createdat|date("d/m/Y h:m:s")}}</td>
+                            
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

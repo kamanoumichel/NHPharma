@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de la commande{% endblock %}
+
+{% block body %}
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0">
+                <h1 class="pb-2 text-center">Création de la Commande</h1>
+            </div>
+        </div>
+    </div>
+</div>
+  
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5 mb-md-0">
+                <h2 class="h3 mb-3 text-black">Détail de la Facture</h2>
+                <div class="p-3 p-lg-5 border">
+                    {{form_start(form,{action:path('order_prepare')})}}
+                    <div class="form-group">
+                        <h3 class="text-body pb-3"><span>1- Details de Navigation</span></h3>
+                        <p>Si vous n'avez pas d'adresse ajouter en une dans votre espace compte <a href="#">Ajouter une adresse</a></p>
+                    </div>   
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h3 class="text-body pb-3"><span>2- Choisir votre livraison</span></h3>
+                            <div class="row">{{form_row(form.addresses)|replace({'[-Br]':'<br>'})|raw}}</div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <h3 class="text-body pb-3"><span>3- Mode de livraison</span></h3>
+                            <div class="row">{{form_row(form.transporter)|replace({'[-Br]':'<br>'})|raw}}</div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-success mb-3 text-white" type="submit">Valider Ma Commande</button>
+                            </div>
+                            {{form_end(form)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-5 mb-md-0">
+                <h2 class="h3 mb-3 text-black">Récapitulatif de la commande <small class="fs-base text-muted">{{ recapCart|length}} produits</small></h2>
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <h2 class="h3 mb-3 text-black">Code du Coupon</h2>
+                        <div class="p-3 p-lg-5 border">
+                            <label for="c_code" class="text-black mb-3">Entrer votre code si vous en avez un</label>
+                            <div class="input-group w-75">
+                                <input type="text" class="form-control" id="c_code" placeholder="Code du Coupon" aria-label="Coupon Code"
+                                aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary btn-sm px-4" type="button" id="button-addon2">Valider</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 p-lg-5 border">            
+                    <div class="table-responsive site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">Image</th>
+                                    <th class="product-name">Produit</th>
+                                    <th class="product-price">Prix unitaire</th>
+                                    <th class="product-quantity">Quantité</th>
+                                    <th class="product-total">Total</th>
+                                    <th class="product-remove">Supprimer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% set total = null %}
+                            {% set totalpro = null %}
+                            {% set totalquantity = null %}
+                            {% for element in recapCart  %}
+                            {% set totalpro = (element.product.prix * element.quantity) %}
+                            {% set total = total + (element.product.prix * element.quantity) %}
+                            {% set totalquantity = totalquantity + element.quantity %}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="/uploads/attachments/{{element.product.attachment}}" alt="Image" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">{{element.product.nompro}}</h2>
+                                    </td>
+                                    <td>{{element.product.prix}}</td>
+                                    <td>
+                                        <div class="btn-group mb-3" style="max-width: 120px;">   
+                                            <span class="btn btn-outline-primary disabled">
+                                                {{element.quantity}}
+                                            </span>                                               
+                                        </div>
+                                    </td>
+                                    <td>{{totalpro}}</td>
+                                    <td><a href="{{path('cart_remove',{id: element.product.id})}}" class="btn btn-danger height-auto btn-sm"><span class="icon-delete_forever"></span></a></td>
+                                 </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="4">Total</td>
+                                    <td colspan="2">{{total}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>       
+              
+   
+
+                    
+
+   
+
+{% endblock %}

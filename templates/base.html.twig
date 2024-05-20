@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/NHP.png') }}">
+        <title>    
+            {% block title %}NHPharma{% endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block stylesheets %}
+            <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('assets/fonts/icomoon/style.css ') }}">
+
+            <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
+        
+            <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
+
+            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        {% endblock %}
+
+
+    </head>
+    <body>
+        {% block body %}
+        <div class="whatsapp what_img">
+            <a href="https://wa.me/237652526813"> <img src="{{ asset('assets/images/logo_what.png') }}" width="70" alt="whatsapp"></a>
+        </div>
+
+        <div class="site-wrap">
+            <div class="site-navbar py-2">
+                <div class="search-wrap">
+                    <div class="container">
+                        <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
+                        {{ form_start(form)}}
+                        <form action="{{path('app_search')}}">
+                            {{form_widget(form.q)}}
+                        </form>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="logo ">
+                            <div class="site-logo">
+                                <a href="/" class="js-logo-clone">
+                                    <img src="{{ asset('assets/images/NHPHARMA.png') }}" alt="logo" style="width: 300px;height: 150px;">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="main-nav d-none d-lg-block">
+                            <nav class="site-navigation text-right text-md-center" role="navigation">
+                                <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                    <li><a href="{{ path('app_home') }}" class="mkgm-hover">Accueil</a></li>
+                                    <li><a href="{{ path('app_pharmacie_index')}}">Pharmacie</a></li>
+                                    <li class="has-children">
+                                        <a href="{{path('categories_index')}}">Catégories</a>
+                                        <ul class="dropdown">
+                                            {% set mkgm = false %}
+                                            {% for item in categories %}
+                                                {% if loop.first %}
+                                                    {% if item.parent == null %}    
+                                                        <li class="has-children">
+                                                            <a href="{{ path('categories_list',{ slug: item.slug}) }}">
+                                                                {{ item.nomCat}}
+                                                            </a>
+                                                            <ul class="dropdown">                                                 
+                                                    {% else %}
+                                                        <li><a href="{{ path('categories_list',{ slug: item.slug}) }}">{{ item.nomCat }}</a></li>
+                                                        {% set mkgm = false %}
+                                                    {% endif %}
+                                                    {% if mkgm == true %}
+                                                            </ul>
+                                                        </li>
+                                                    {% else %}
+                                                        {% set mkgm = true %}
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if item.parent == null %}
+                                                            </ul>
+                                                        </li>
+                                                        <li class="has-children">
+                                                            <a href="{{ path('categories_list',{ slug: item.slug}) }}">
+                                                                {{ item.nomCat}}
+                                                            </a>
+                                                            <ul class="dropdown">                                  
+                                                    {% else %}
+                                                        <li><a href="{{ path('categories_list',{ slug: item.slug}) }}">{{ item.nomCat }}</a></li>                                             
+                                                        {% set mkgm = false %}
+                                                    {% endif %}
+                                                    {% if mkgm == true %}
+                                                        {% else %}
+                                                        {% set mkgm = true %}
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% if loop.last %}
+                                                            </ul>
+                                                        </li>
+                                                {% endif %}                                           
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                    <li><a href="{{ path('article_index') }}">Blog</a></li>
+                                    <li><a href="{{ path('app_about') }}">A Propos</a></li>
+                                    <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="icons">
+                            <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
+                            <a href="{{path('cart_index')}}" class="icons-btn d-inline-block bag">
+                                <span class="icon-shopping-bag"></span>
+                            </a>
+                            <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span class="icon-menu"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="infos" style="z-index: 2000;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Politique de confidentialité et de sécurité</h2>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        <ol class="text-justify">
+                            <li>Collecte et utilisation des données :
+                                Nous collectons les informations personnelles des utilisateurs telles que leur nom, adresse,
+                                numéro de téléphone et adresse e-mail uniquement dans le cadre du traitement des
+                                commandes et de la communication avec nos clients. Ces informations ne seront utilisées
+                                que dans le but spécifique pour lequel elles ont été fournies.
+                            </li>
+                            <li>
+                                Sécurité des données :
+                                Nous mettons en place des mesures de sécurité appropriées pour protéger les informations
+                                personnelles des utilisateurs. Cela inclut le cryptage des données, l'accès restreint aux
+                                employés autorisés et l'utilisation de pare-feu et de logiciels antivirus.
+                            </li>
+                            <li>
+                                Partage d'informations :
+                                Nous ne partagerons pas les informations personnelles des utilisateurs avec des tiers, sauf
+                                dans les cas où cela est nécessaire pour le traitement des commandes (par exemple, avec
+                                les transporteurs pour la livraison). Dans de tels cas, nous veillerons à ce que les tiers
+                                respectent également la confidentialité et la sécurité des données.
+                            </li>
+                            <li>
+                                Cookies et suivi en ligne :
+                                Nous utilisons des cookies sur notre site web pour améliorer l'expérience utilisateur. Les
+                                cookies sont de petits fichiers texte stockés sur l'ordinateur de l'utilisateur qui permettent de
+                                reconnaître l'utilisateur lorsqu'il revient sur notre site. Les utilisateurs ont la possibilité de
+                                gérer leurs préférences en matière de cookies dans les paramètres de leur navigateur.
+                            </li>
+                            <li>
+                                Droits des utilisateurs :
+                                Les utilisateurs ont le droit d'accéder à leurs informations personnelles, de les corriger ou de
+                                les supprimer. Ils peuvent exercer ces droits en nous contactant via les coordonnées
+                                fournies sur notre site web.
+                            </li>
+                            <li>
+                                Communication marketing :
+                                Nous n'enverrons des communications marketing aux utilisateurs que s'ils ont donné leur
+                                consentement explicite. Les utilisateurs ont la possibilité de se désabonner de ces
+                                communications à tout moment en suivant les instructions de désabonnement fournies dans
+                                les e-mails.
+                            </li>
+                            <li>
+                                Durée de conservation des données :
+                                Nous conserverons les informations personnelles des utilisateurs aussi longtemps que
+                                nécessaire pour atteindre les objectifs pour lesquels elles ont été collectées, sauf si la loi
+                                exige ou autorise une conservation plus longue.
+                            </li>
+                            <li>
+                                Modifications de la politique :
+                                Nous nous réservons le droit de mettre à jour notre politique de confidentialité et de sécurité.
+                                Toute modification sera publiée sur notre site web et nous informerons les utilisateurs des
+                                changements importants par d'autres moyens appropriés.
+                            </li>
+                        </ol>
+          
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="site-footer bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                    <div class="block-7">
+                        <h3 class="footer-heading mb-4">A Propos de nous</h3>
+                        <p>NHPharma est un projet de e-pharmacie créé par un groupe d'élève ingénieure à l'école nationale
+                        Supérieure Polytechnique de yaoundé dans le cadre d'un projet scolaire.</p>
+                    </div>
+                    <a href="{{ path('app_about') }}" class="btn btn-info">Voir Plus</a>
+                </div>
+                <div class="col-lg-3 mx-auto mb-5 mb-lg-0">
+                    <h3 class="footer-heading mb-4">Liens Rapides</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ path('app_pharmacie_index')}}">Pharmacie</a></li>
+                        <li><a href="{{path('categories_index')}}">Catégories</a></li>
+                        <li><a href="{{ path('app_contact') }}">Contact</li>
+                        <li><a href="{{ path('article_index') }}">Blog</li>
+                        <li><a href="{{ path('app_register') }}">S'inscrire</li>
+                        <li><a href="{{ path('app_login') }}">Se connecter</li>
+                         <!-- Button trigger modal -->
+                        <li type="button" data-toggle="modal" data-target="#infos"><a href="#">Politique de confidentialité</li>
+
+
+                           
+                    </ul>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="block-5 mb-5">
+                        <h3 class="footer-heading mb-4">Contacts</h3>
+                        <ul class="list-unstyled">
+                            <li class="address">Cameroun, Yaoundé, Melen, Ecole Nationale Supérieure Polytechnique</li>
+                            <li class="phone"><a href="tel://237682464056">+237 682 46 40 56</a></li>
+                            <li class="email"><a href="mailto:angylontsi@gmail.com">angylontsi@gmail.com</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row pt-5 mt-5 text-center">
+                <div class="col-md-12">
+                    <p> 
+                        Copyright &copy; 2023 Tout Droit Reservé | Fait avec <i class="icon-heart" aria-hidden="true"></i> par
+                        <a href="#" target="_blank" class="text-primary">MKGM et MLA</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+{% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+            <script src="{{ asset('assets/js/popper.min.js') }}"></script>
+            <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+            <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+            <script src="{{ asset('assets/js/aos.js') }}"></script>
+
+            <script src="{{ asset('assets/js/main.js') }}"></script>
+        {% endblock %}
+        
+    </body>
+</html>

@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+            <div class="modal fade" id="infos" style="z-index: 2000;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Politique de confidentialité et de sécurité</h2>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        <ol class="text-justify">
+                            <li>Collecte et utilisation des données :
+                                Nous collectons les informations personnelles des utilisateurs telles que leur nom, adresse,
+                                numéro de téléphone et adresse e-mail uniquement dans le cadre du traitement des
+                                commandes et de la communication avec nos clients. Ces informations ne seront utilisées
+                                que dans le but spécifique pour lequel elles ont été fournies.
+                            </li>
+                            <li>
+                                Sécurité des données :
+                                Nous mettons en place des mesures de sécurité appropriées pour protéger les informations
+                                personnelles des utilisateurs. Cela inclut le cryptage des données, l'accès restreint aux
+                                employés autorisés et l'utilisation de pare-feu et de logiciels antivirus.
+                            </li>
+                            <li>
+                                Partage d'informations :
+                                Nous ne partagerons pas les informations personnelles des utilisateurs avec des tiers, sauf
+                                dans les cas où cela est nécessaire pour le traitement des commandes (par exemple, avec
+                                les transporteurs pour la livraison). Dans de tels cas, nous veillerons à ce que les tiers
+                                respectent également la confidentialité et la sécurité des données.
+                            </li>
+                            <li>
+                                Cookies et suivi en ligne :
+                                Nous utilisons des cookies sur notre site web pour améliorer l'expérience utilisateur. Les
+                                cookies sont de petits fichiers texte stockés sur l'ordinateur de l'utilisateur qui permettent de
+                                reconnaître l'utilisateur lorsqu'il revient sur notre site. Les utilisateurs ont la possibilité de
+                                gérer leurs préférences en matière de cookies dans les paramètres de leur navigateur.
+                            </li>
+                            <li>
+                                Droits des utilisateurs :
+                                Les utilisateurs ont le droit d'accéder à leurs informations personnelles, de les corriger ou de
+                                les supprimer. Ils peuvent exercer ces droits en nous contactant via les coordonnées
+                                fournies sur notre site web.
+                            </li>
+                            <li>
+                                Communication marketing :
+                                Nous n'enverrons des communications marketing aux utilisateurs que s'ils ont donné leur
+                                consentement explicite. Les utilisateurs ont la possibilité de se désabonner de ces
+                                communications à tout moment en suivant les instructions de désabonnement fournies dans
+                                les e-mails.
+                            </li>
+                            <li>
+                                Durée de conservation des données :
+                                Nous conserverons les informations personnelles des utilisateurs aussi longtemps que
+                                nécessaire pour atteindre les objectifs pour lesquels elles ont été collectées, sauf si la loi
+                                exige ou autorise une conservation plus longue.
+                            </li>
+                            <li>
+                                Modifications de la politique :
+                                Nous nous réservons le droit de mettre à jour notre politique de confidentialité et de sécurité.
+                                Toute modification sera publiée sur notre site web et nous informerons les utilisateurs des
+                                changements importants par d'autres moyens appropriés.
+                            </li>
+                        </ol>
+          
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <div class="container">
+        <div class="card-deck">
+            <div class="col-md-12 mt-5">
+                <div class="card h-100">
+                    <h1 class="card-img-top text-center text-primary"><u>Insrciption Des Utilisateurs</u></h1>
+                    <div class="card-body">
+                        <h5 class="card-title">Entrez vos informations ils seront garder confidentielle</h5>
+                        {{ form_errors(registrationForm) }}
+                        {{ form_start(registrationForm) }}
+                            {{ form_row(registrationForm.nom) }}
+                            {{ form_row(registrationForm.prenom) }}
+                            {{ form_row(registrationForm.email) }}
+                            {{ form_row(registrationForm.ville) }}
+                            {{ form_row(registrationForm.adresse) }}
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Mot de Passe'
+                            }) }}
+                           
+                            {{ form_row(registrationForm.agreeTerms) }}
+                           
+                            
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Valider</button>
+                                {{ form_end(registrationForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+  
+        </div>
+   
+    </div>
+{% endblock %}

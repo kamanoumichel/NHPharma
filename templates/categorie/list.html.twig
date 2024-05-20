@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des produits de la catégorie {{ category.nomCat }} {% endblock %}
+
+{% block body %}
+{{ parent() }}
+    <div class="container">
+        <section class="row">
+            <div class="col-12">
+            <h1>Liste des produits de la catégorie {{ category.nomCat }} </h1></div>
+        </section>
+        
+            {% if category.parent == null %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jumbotron text-center">
+                            <img src="{{asset('assets/images/categorie.jpeg')}}" class="card-img-top" alt="Image">
+                                <p>Veuillez choisir une sous-catégorie si vous plait !</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for lt in categories %}
+                        {% if category.nomCat == lt.parent %}
+                            <div class="col-md-4 border m-3 rounded p-2">
+                                <a href="{{ path('categories_list',{ slug: lt.slug}) }}" class="btn btn-outline-success">
+                                {{lt.nomCat}}</a>
+                            </div>
+                        {% endif %}
+                {% endfor %}
+                </div>
+
+        
+            {% endif %}
+        
+        <div class="row">
+        {% for item in pro %}
+            {% if item.souscategorie == category.nomCat %}
+                <div class="col-md-4 mt-5 mb-2">
+                    <div class="card h-100">
+                        <img src="/uploads/attachments/{{item.attachment}}" class="card-img-top mkgm-img" alt="Image" height="150">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.nompro }}</h5>
+                            {% if item.stock != 0 %}
+                                <p class="text-success text-right">En stock</p>
+                            {% else %}
+                                <p class="text-danger text-right">Stock épuissé</p>
+                            {% endif %}
+                            <p class="text-dark">{{item.prix}} XAF</p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-primary btn-lg btn-block" ><a href="{{path('app_pharmacie_detailproduit',{slug: item.slug})}}" class="text-dark">Voir les details</a></button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-success btn-lg btn-block" ><a href="{{path('cart_add',{id: item.id})}}" class="text-white">Ajouter au panier</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            
+    {% endfor %}
+    
+        
+    </div>
+
+   
+
+    
+</div>
+
+
+
+
+
+
+{% endblock %}
+  
+
+
+        
